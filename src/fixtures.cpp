@@ -13,47 +13,64 @@ std::vector<Fixture> generateFixtures(const std::vector<Team>& teams) {
     std::vector<Fixture> fixtures;
     int weekend = 1;
 
-    // Ensure no team plays more than once per weekend
+    // First, generate inter-town matches
     for (size_t i = 0; i < teams.size(); i++) {
         for (size_t j = i + 1; j < teams.size(); j++) {
             if (teams[i].localTown != teams[j].localTown) {
-                fixtures.push_back({teams[i].name, teams[j].name, teams[i].stadium, teams[i].localTown, 1, weekend});
-                fixtures.push_back({teams[j].name, teams[i].name, teams[j].stadium, teams[j].localTown, 2, weekend});
+                fixtures.push_back({teams[i].name, teams[j].name, teams[i].stadium, teams[i].localTown, 1, 0});
+                fixtures.push_back({teams[j].name, teams[i].name, teams[j].stadium, teams[j].localTown, 2, 0});
             }
         }
     }
 
-    // Add local town matches
+    // Then, generate intra-town matches
     for (size_t i = 0; i < teams.size(); i++) {
         for (size_t j = i + 1; j < teams.size(); j++) {
             if (teams[i].localTown == teams[j].localTown) {
-                fixtures.push_back({teams[i].name, teams[j].name, teams[i].stadium, teams[i].localTown, 1, weekend});
-                fixtures.push_back({teams[j].name, teams[i].name, teams[j].stadium, teams[j].localTown, 2, weekend});
+                fixtures.push_back({teams[i].name, teams[j].name, teams[i].stadium, teams[i].localTown, 1, 0});
+                fixtures.push_back({teams[j].name, teams[i].name, teams[j].stadium, teams[j].localTown, 2, 0});
             }
         }
     }
 
     return fixtures;
 }
-
-std::vector<Fixture> scheduleFixtures(std::vector<Fixture>& fixtures) {
+std::vector<Fixture> scheduleFixtures(const std::vector<Fixture>& fixtures) {
     std::vector<Fixture> scheduledFixtures;
-    std::map<int, int> weekendMatchCount; // Weekend to count of matches
+    std::map<int, int> weekendMatchCount; // Keeps track of the number of matches per weekend
+    std::map<std::string, int> lastTeamWeekend; // Tracks the last weekend each team played
+
+    int currentWeekend = 1; // Start scheduling from the first weekend
 
     for (auto& fixture : fixtures) {
-        if (weekendMatchCount[fixture.weekend] < 2) {
-            scheduledFixtures.push_back(fixture);
-            weekendMatchCount[fixture.weekend]++;
-        } else {
-            fixture.weekend++; // Move to next weekend if current is full
-            weekendMatchCount[fixture.weekend]++;
-            scheduledFixtures.push_back(fixture);
+        // Check if both teams have played this weekend
+        int homeTeamLastWeekend = lastTeamWeekend[fixture.homeTeam];
+        int awayTeamLastWeekend = lastTeamWeekend[fixture.awayTeam];
+
+        // If the current weekend is filled or one of the teams played already this weekend, move to next weekend
+        if (weekendMatchCount[currentWeekend] >= 2 ||
+            (homeTeamLastWeekend == currentWeekend) ||
+            (awayTeamLastWeekend == currentWeekend)) {
+            currentWeekend++; // Move to the next weekend
         }
+
+        // Schedule the fixture for the current weekend
+        Fixture scheduledFixture = fixture;
+        scheduledFixture.weekend = currentWeekend; // Assign the current weekend to the fixture
+
+        // Update last played weekend for both teams
+        lastTeamWeekend[scheduledFixture.homeTeam] = currentWeekend;
+        lastTeamWeekend[scheduledFixture.awayTeam] = currentWeekend;
+
+        // Increment match count for the current weekend
+        weekendMatchCount[currentWeekend]++;
+
+        // Add the scheduled fixture to the list
+        scheduledFixtures.push_back(scheduledFixture);
     }
 
     return scheduledFixtures;
 }
-
 void outputFixtures(const std::vector<Fixture>& fixtures) {
     std::ofstream outFile("output/fixtures.csv");
     outFile << "Home Team,Away Team,Stadium,Local Town,Leg,Weekend\n";

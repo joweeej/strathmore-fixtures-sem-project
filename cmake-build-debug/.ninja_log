@@ -1,0 +1,16 @@
+# ninja log v6
+88	395	7471015302286898	CMakeFiles/semproj.dir/test/test_csv_reader.cpp.obj	8992418afc8814da
+2	370	7471016036939938	build.ninja	813429e4d408ad7a
+118	414	7471015302596821	CMakeFiles/semproj.dir/test/test_fixtures.cpp.obj	f91eee48a9c49b42
+9	797	7471015301504440	CMakeFiles/semproj.dir/src/main.cpp.obj	cc86eb7ed02f0076
+41	1021	7471015301821635	CMakeFiles/semproj.dir/src/csv_reader.cpp.obj	c5012be389a0e5b6
+64	1280	7471015302055060	CMakeFiles/semproj.dir/src/fixtures.cpp.obj	31663e61ded22040
+3	24	7471015299341751	clean	f0819b41ab4c6e17
+1280	1456	7471015314207664	semproj.exe	ce7432cf39018a8a
+2	323	7471016036939938	build.ninja	813429e4d408ad7a
+48	321	7471016037815860	CMakeFiles/semproj.dir/test/test_csv_reader.cpp.obj	649cdf5610745fef
+75	355	7471016038090072	CMakeFiles/semproj.dir/test/test_fixtures.cpp.obj	de341fd79add2ada
+7	730	7471016037410297	CMakeFiles/semproj.dir/src/main.cpp.obj	7aac6ce22c7bb36b
+25	945	7471016037589074	CMakeFiles/semproj.dir/src/csv_reader.cpp.obj	17a2fbe19c3b4c15
+99	1232	7471016038331245	CMakeFiles/semproj.dir/src/fixtures.cpp.obj	1f606d5c12c71091
+1232	1405	7471016049665013	semproj.exe	20e0ab2ef9f52584
