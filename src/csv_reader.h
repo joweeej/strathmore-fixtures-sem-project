@@ -5,4 +5,10 @@
 #ifndef SEMPROJ_CSV_READER_H
 #define SEMPROJ_CSV_READER_H
 
+
+#include <vector>
+#include <string>
+#include "teams.h"
+
+std::vector<Team> readTeamsFromCSV(const std::string & filename);
 #endif //SEMPROJ_CSV_READER_H
