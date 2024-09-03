@@ -8,4 +8,5 @@ add_executable(semproj src/main.cpp
         src/csv_reader.h
         test/test_csv_reader.cpp
         test/test_fixtures.cpp
-        src/fixtures.h)
+        src/fixtures.h
+        src/fixtures.cpp)

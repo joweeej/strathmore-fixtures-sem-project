@@ -73,6 +73,12 @@ build CMakeFiles/semproj.dir/test/test_fixtures.cpp.obj: CXX_COMPILER__semproj_u
   OBJECT_DIR = CMakeFiles\semproj.dir
   OBJECT_FILE_DIR = CMakeFiles\semproj.dir\test
 
+build CMakeFiles/semproj.dir/src/fixtures.cpp.obj: CXX_COMPILER__semproj_unscanned_Debug C$:/Users/warig/CLionProjects/semproj/src/fixtures.cpp || cmake_object_order_depends_target_semproj
+  DEP_FILE = CMakeFiles\semproj.dir\src\fixtures.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\semproj.dir
+  OBJECT_FILE_DIR = CMakeFiles\semproj.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target semproj
@@ -81,7 +87,7 @@ build CMakeFiles/semproj.dir/test/test_fixtures.cpp.obj: CXX_COMPILER__semproj_u
 #############################################
 # Link the executable semproj.exe
 
-build semproj.exe: CXX_EXECUTABLE_LINKER__semproj_Debug CMakeFiles/semproj.dir/src/main.cpp.obj CMakeFiles/semproj.dir/src/csv_reader.cpp.obj CMakeFiles/semproj.dir/test/test_csv_reader.cpp.obj CMakeFiles/semproj.dir/test/test_fixtures.cpp.obj
+build semproj.exe: CXX_EXECUTABLE_LINKER__semproj_Debug CMakeFiles/semproj.dir/src/main.cpp.obj CMakeFiles/semproj.dir/src/csv_reader.cpp.obj CMakeFiles/semproj.dir/test/test_csv_reader.cpp.obj CMakeFiles/semproj.dir/test/test_fixtures.cpp.obj CMakeFiles/semproj.dir/src/fixtures.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\semproj.dir
