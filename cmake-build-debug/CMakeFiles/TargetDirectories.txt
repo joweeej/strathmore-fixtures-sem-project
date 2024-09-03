@@ -1,0 +1,3 @@
+C:/Users/warig/CLionProjects/semproj/cmake-build-debug/CMakeFiles/semproj.dir
+C:/Users/warig/CLionProjects/semproj/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/warig/CLionProjects/semproj/cmake-build-debug/CMakeFiles/rebuild_cache.dir
