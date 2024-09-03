@@ -8,7 +8,7 @@
 
 #include <vector>
 #include <string>
-#include "teams.h"
+#include  "../include/teams.h"
 
 struct Fixture{
     std::string homeTeam;

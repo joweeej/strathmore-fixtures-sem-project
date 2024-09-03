@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-
+#include  "../include/teams.h"
 std::vector<Team> readTeamsFromCSV(const std::string & filename){
     std::vector<Team> teams;
     std::ifstream file(filename);

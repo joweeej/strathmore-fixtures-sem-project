@@ -8,7 +8,7 @@
 
 #include <vector>
 #include <string>
-#include "teams.h"
+#include  "../include/teams.h"
 
 std::vector<Team> readTeamsFromCSV(const std::string & filename);
 #endif //SEMPROJ_CSV_READER_H
