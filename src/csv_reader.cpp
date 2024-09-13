@@ -11,7 +11,12 @@ std::vector<Team> readTeamsFromCSV(const std::string & filename){
     std::ifstream file(filename);
     std::string line;
 
-    std::getline(file,line);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the file: " << filename << std::endl;
+        return teams;
+    }
+
+    std::getline(file, line); // Skip header line
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string name, localTown, stadium;
@@ -21,6 +26,12 @@ std::vector<Team> readTeamsFromCSV(const std::string & filename){
         std::getline(ss, stadium, ',');
 
         teams.push_back({name, localTown, stadium});
+    }
+
+    // Debug output
+    std::cout << "Read " << teams.size() << " teams from CSV file." << std::endl;
+    for (const auto& team : teams) {
+        std::cout << team.name << ", " << team.localTown << ", " << team.stadium << std::endl;
     }
 
     return teams;

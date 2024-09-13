@@ -6,6 +6,7 @@
 #include <set>
 #include <map>
 #include <vector>
+#include <filesystem>
 #include "fixtures.h"
 
 
@@ -33,8 +34,16 @@ std::vector<Fixture> generateFixtures(const std::vector<Team>& teams) {
         }
     }
 
+    // Debug output
+    std::cout << "Generated " << fixtures.size() << " fixtures." << std::endl;
+    for (const auto& fixture : fixtures) {
+        std::cout << fixture.homeTeam << " vs " << fixture.awayTeam << " at " << fixture.stadium
+                  << ", " << fixture.localTown << " - Leg " << fixture.leg << std::endl;
+    }
+
     return fixtures;
 }
+
 std::vector<Fixture> scheduleFixtures(const std::vector<Fixture>& fixtures) {
     std::vector<Fixture> scheduledFixtures;
     std::map<int, int> weekendMatchCount; // Keeps track of the number of matches per weekend
@@ -69,18 +78,51 @@ std::vector<Fixture> scheduleFixtures(const std::vector<Fixture>& fixtures) {
         scheduledFixtures.push_back(scheduledFixture);
     }
 
-    return scheduledFixtures;
-}
-void outputFixtures(const std::vector<Fixture>& fixtures) {
-    std::ofstream outFile("output/fixtures.csv");
-    outFile << "Home Team,Away Team,Stadium,Local Town,Leg,Weekend\n";
-
-    for (const auto& fixture : fixtures) {
+    // Debug output
+    std::cout << "Scheduled " << scheduledFixtures.size() << " fixtures." << std::endl;
+    for (const auto& fixture : scheduledFixtures) {
         std::cout << "Weekend #" << fixture.weekend << ": " << fixture.homeTeam << " vs " << fixture.awayTeam
                   << " at " << fixture.stadium << ", " << fixture.localTown << " - Leg " << fixture.leg << std::endl;
-        outFile << fixture.homeTeam << "," << fixture.awayTeam << "," << fixture.stadium << "," << fixture.localTown
-                << "," << fixture.leg << "," << fixture.weekend << "\n";
+    }
+
+    return scheduledFixtures;
+}
+
+
+void outputFixtures(const std::vector<Fixture>& fixtures) {
+    std::filesystem::path outputDir = "output";
+
+    try {
+        if (!std::filesystem::exists(outputDir)) {
+            std::filesystem::create_directories(outputDir);
+            std::cout << "Output directory created at " << outputDir << "." << std::endl;
+        } else {
+            std::cout << "Output directory already exists at " << outputDir << "." << std::endl;
+        }
+    } catch (const std::filesystem::filesystem_error& e) {
+        std::cerr << "Failed to create output directory: " << e.what() << std::endl;
+        return;
+    }
+
+    std::ofstream outFile(outputDir / "fixtures.csv");
+    if (!outFile.is_open()) {
+        std::cerr << "Failed to open the output file at " << (outputDir / "fixtures.csv") << "!" << std::endl;
+        return;
+    }
+
+    std::cout << "Writing to the output file at " << (outputDir / "fixtures.csv") << "..." << std::endl;
+    outFile << "Home Team,Away Team,Stadium,Local Town,Leg,Weekend\n";
+
+    if (fixtures.empty()) {
+        std::cout << "No fixtures to write." << std::endl;
+    }
+
+    for (const auto& fixture : fixtures) {
+        outFile << fixture.homeTeam << "," << fixture.awayTeam << "," << fixture.stadium << ","
+                << fixture.localTown << "," << fixture.leg << "," << fixture.weekend << "\n";
     }
 
     outFile.close();
+    std::cout << "Finished writing to the output file at " << (outputDir / "fixtures.csv") << "." << std::endl;
 }
+
